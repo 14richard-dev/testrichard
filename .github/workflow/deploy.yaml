@@ -12,12 +12,12 @@ jobs:
 
         - name: "Build the image"
           run: |
-             docker build -t 14richard/testimage100 .
+             docker build -t 14richard-dev/testimage100 .
 
         - name: "Push to DockerHub"
           run: |
-            docker login -u 14richard -p ${{ secrets.DOCKER_PASSWORD }}
-            docker push 14richard/testimage100
+            docker login -u 14richard-dev -p ${{ secrets.DOCKER_PASSWORD }}
+            docker push 14richard-dev/testimage100
             echo "Image pushed successfully!"
 
     jobs2:
@@ -28,11 +28,26 @@ jobs:
            run: |
               echo "This is the second job"
 
+         - name: "Checkout"
+           uses: actions/checkout@v4
+           with:
+             name: "sample-artifact"
+             path: "index.html"
+             retention-days: 60
+
+
+         - name: "Uploads as a second artifact"
+           uses: actions/upload-artifact@v4
+           with:
+             name: "sample-artifact2"
+             path: "index.html"
+             retention-days: 60
+
          - name: "Pull the image from dockerhub into environment"
            run: |
-              docker pull 14richard/testimage100
+              docker pull 14richard-dev/testimage100
               echo "Image pulled successfully"
-              docker run -d -p 8080:80 14richard/testimage100 
+              docker run -d -p 8080:80 14richard-dev/testimage100 
 
 
   
