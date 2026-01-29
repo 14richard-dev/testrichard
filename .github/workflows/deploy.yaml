@@ -14,12 +14,12 @@ jobs:
 
       - name: "Build the image"
         run: |
-          docker build -t 14richard-dev/testimage100 .
+          docker build -t 14richard/testimage100 .
 
       - name: "Push to DockerHub"
         run: |
-          docker login -u 14richard-dev -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker push 14richard-dev/testimage100
+          docker login -u 14richard -p "${{ secrets.DOCKER_PASSWORD }}"
+          docker push 14richard/testimage100
           echo "Image pushed successfully!"
 
   job2:
@@ -48,6 +48,6 @@ jobs:
 
       - name: "Pull the image from DockerHub into environment"
         run: |
-          docker pull 14richard-dev/testimage100
+          docker pull 14richard/testimage100
           echo "Image pulled successfully!"
-          docker run -d -p 8080:80 14richard-dev/testimage100
+          docker run -d -p 8080:80 14richard/testimage100
