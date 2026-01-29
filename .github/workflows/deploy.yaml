@@ -18,7 +18,7 @@ jobs:
 
       - name: "Push to DockerHub"
         run: |
-          docker login -u 14richard-dev -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login -u 14richard-dev -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push 14richard-dev/testimage100
           echo "Image pushed successfully!"
 
