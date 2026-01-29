@@ -1,0 +1,38 @@
+name:  DEployment 
+on:
+    push:
+        branches:
+        - master
+jobs:
+    job1:
+        runs-on: ubuuntu-latest
+        steps:
+        - name: "Checkout"
+          uses: actions/checkout@v4
+
+        - name: "Build the image"
+          run: |
+             docker build -t 14richard/testimage100 .
+
+        - name: "Push to DockerHub"
+          run: |
+            docker login -u 14richard -p ${{ secrets.DOCKER_PASSWORD }}
+            docker push 14richard/testimage100
+            echo "Image pushed successfully!"
+
+    jobs2:
+         runs-on: ubuuntu-latest
+         needs: job1
+         steps:
+         - name: "Confirms the job"
+           run: |
+              echo "This is the second job"
+
+         - name: "Pull the image from dockerhub into environment"
+           run: |
+              docker pull 14richard/testimage100
+              echo "Image pulled successfully"
+              docker run -d -p 8080:80 14richard/testimage100 
+
+
+  
