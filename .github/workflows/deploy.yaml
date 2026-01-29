@@ -16,7 +16,7 @@ jobs:
         run: |
           docker build -t 14richard/testimage100 .
 
-      - name: "Push to DockerHub"
+      - name: "Push to Dockerhub"
         run: |
           docker login -u 14richard -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push 14richard/testimage100
